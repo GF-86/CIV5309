@@ -1,0 +1,75 @@
+
+<html>
+    <head>
+        <title>Penrith Survey</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            header{
+                background-image: url("banner.jpg");
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+            }
+            h1 {
+                text-align: center;
+                text-transform: uppercase;
+                color: whitesmoke;
+                font-size: 11vw;
+                font-family: Arial, Helvetica, sans-serif;
+                position: relative;
+                top: 0px;
+            }
+            body {
+                background-color: gray;
+                margin: 0px;
+            }
+            button {
+                border: none;
+                color: white;
+                width: 100%;
+                height: 12.5%;
+                margin-top: 5px;
+                text-align: center;
+                text-decoration: none;
+                display: block;
+                font-size: 6vw;
+                border-radius: 12px;
+            }
+            p {
+                display: block;
+            }
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>       
+    </head>
+
+    <body>
+        <header>
+            <h1>Penrith Survey</h1>
+        </header>
+        <button style="background-color: #FFFFFF;color: black;">Adult Entering Station</button>
+        <button style="background-color: #006DAE;">Student Entering Station</button>
+        <button style="background-color: #000000;">Child Entering Station</button>
+        <button style="background-color: #3c3c3c;">Adult Passing Station</button>
+        <button style="background-color: #505050;">Student Passing Station</button>
+        <button style="background-color: #F6F6F6;color: black;">Child Passing Station</button>
+        <p id="hld"></p> 
+    </body>
+
+    <script>
+        var d1 = new Date();
+        dmy = d1.getDate() + "," + (d1.getMonth() + 1) + "," + d1.getFullYear();
+        $(document).ready(function(){
+            $("button").click(function() {
+                var d = new Date();
+                var t = d.getHours() + "," + d.getMinutes() + "," + d.getSeconds();
+                temp_string = "('" + this.innerHTML + "'," + t + "," + dmy + ")";
+                console.log(temp_string);
+                $.post("Penrith_stn_reciever.php",{ str: temp_string },function(){});
+                var text = document.createTextNode(temp_string);
+                $("#hld").append(text); 
+                $("#hld").append((document.createElement("br")));
+            }); 
+        });    
+    </script>
+</html>
